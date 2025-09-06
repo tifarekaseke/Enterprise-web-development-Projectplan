@@ -1,5 +1,4 @@
 # Enterprise-web-development-Projectplan
-:
 
 📊 MoMo SMS Data Dashboard
 Members & Responsibilities
@@ -70,8 +69,9 @@ Visualize – Frontend dashboard displays analytics (charts, tables).
 
 ⚙️ Setup Instructions
 1. Clone the repository
-git clone https://github.com/<your-team>/<repo-name>.git
-cd <repo-name>
+git clone https://github.com/tifarekaseke/Enterprise-web-development-Projectplan.git
+
+cd Enterpise-web-development-Projectplan
 
 2. Install dependencies
 pip install -r requirements.txt
