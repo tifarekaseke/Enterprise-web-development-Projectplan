@@ -1,9 +1,13 @@
 # Enterprise-web-development-Projectplan
 
+
+
 📊 MoMo SMS Data Dashboard
 Members & Responsibilities
 
-Glo – Frontend & Documentation
+
+
+Gloria Muhorakeye – Frontend & Documentation
 
 README.md (setup, run instructions, project overview)
 
@@ -15,7 +19,9 @@ web/assets/ (images/icons)
 
 User-facing documentation
 
-Kenny – ETL (Data Flow & Processing)
+
+
+Kenny Imanzi– ETL (Data Flow & Processing)
 
 etl/config.py (paths, thresholds, categories)
 
@@ -27,7 +33,11 @@ etl/categorize.py (categorize transactions)
 
 Contribute to etl/run.py
 
-Tifare – Database & API
+
+
+
+
+Tifare Kaseke – Database & API
 
 data/db.sqlite3 (SQLite database)
 
@@ -37,7 +47,10 @@ api/ (FastAPI for transactions/analytics)
 
 Connect backend → frontend with dashboard.json
 
-Frank – Project Lead & Integration
+
+
+
+Frank Ishimwe – Project Lead & Integration
 
 .env.example (env vars for DB URL/path)
 
@@ -51,9 +64,13 @@ scripts/ (automate ETL/export/serve)
 
 tests/ (unit testing coordination)
 
+
+
+
 📌 Project Overview
 
-This project is an enterprise-level fullstack application designed to process MoMo SMS transaction data in XML format.
+This project is an enterprise-level full-stack application designed to process MoMo SMS transaction data in XML format.
+
 
 The pipeline works as follows:
 
@@ -66,6 +83,7 @@ Categorize – Transactions grouped into categories (e.g., deposits, withdrawals
 Load – Data stored in an SQLite database.
 
 Visualize – Frontend dashboard displays analytics (charts, tables).
+
 
 ⚙️ Setup Instructions
 1. Clone the repository
@@ -125,7 +143,7 @@ Go to: http://localhost:8000
 
 🖼️ System Architecture
 
-Diagram (Draw.io/Miro):
+Diagram (Lucid Chart):
 https://lucid.app/lucidchart/790473e5-3b45-4606-b15a-df609d0c7bb8/edit?invitationId=inv_e04eb2d6-476b-4a1c-bcd7-c635c86b404b&page=0_0#
 
 📅 Scrum Board
