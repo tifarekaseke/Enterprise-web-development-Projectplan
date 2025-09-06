@@ -126,7 +126,7 @@ Go to: http://localhost:8000
 🖼️ System Architecture
 
 Diagram (Draw.io/Miro):
-👉 [Insert Link Here]
+https://lucid.app/lucidchart/790473e5-3b45-4606-b15a-df609d0c7bb8/edit?invitationId=inv_e04eb2d6-476b-4a1c-bcd7-c635c86b404b&page=0_0#
 
 📅 Scrum Board
 
