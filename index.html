@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoMo SMS Dashboard</title>
+  <link rel="stylesheet" href="web/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>📊 MoMo SMS Data Dashboard</h1>
+    <p>Analyze and visualize processed MoMo transaction data.</p>
+  </header>
+
+  <main>
+    <!-- Placeholder for charts -->
+    <section id="chart-area">
+      <div class="chart-card">
+        <h2>📈 Transaction Summary</h2>
+        <canvas id="summaryChart"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h2>💰 Amounts by Category</h2>
+        <canvas id="categoryChart"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h2>📆 Transactions Over Time</h2>
+        <canvas id="timeChart"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built by Team [Insert Name] | 2025</p>
+  </footer>
+
+  <script src="web/chart_handler.js"></script>
+</body>
+</html>
