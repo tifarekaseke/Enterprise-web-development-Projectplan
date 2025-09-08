@@ -14,15 +14,15 @@ This project is an enterprise-level full-stack application designed to process M
 
 The pipeline works as follows:
 
-Extract & Parse – XML transactions are parsed.
+1.Extract & Parse – XML transactions are parsed.
 
-Clean & Normalize – Transaction amounts, phone numbers, and dates are standardized.
+2.Clean & Normalize – Transaction amounts, phone numbers, and dates are standardized.
 
-Categorize – Transactions grouped into categories (e.g., deposits, withdrawals, transfers).
+3.Categorize – Transactions grouped into categories (e.g., deposits, withdrawals, transfers).
 
-Load – Data stored in an SQLite database.
+4.Load – Data stored in an SQLite database.
 
-Visualize – Frontend dashboard displays analytics (charts, tables).
+5.Visualize – Frontend dashboard displays analytics (charts, tables).
 
 
 
