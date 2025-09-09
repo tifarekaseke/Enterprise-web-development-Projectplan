@@ -1,9 +1,13 @@
 # Enterprise-web-development-Projectplan
 
-
-
 📊 MoMo SMS App Data Dashboard
-Members & Responsibilities
+
+Team 8 Cohort 1
+Members:
+1. Frank Ishimwe
+2. Gloria Muhorakeye
+3. Kenny Imanzi
+4. Tifare Kaseke
 
 
 
