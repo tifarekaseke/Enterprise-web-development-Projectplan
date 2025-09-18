@@ -36,15 +36,6 @@ CREATE TABLE transactions (
   CONSTRAINT fk_tx_cat      FOREIGN KEY (category_id)REFERENCES transaction_categories(id)
 ) COMMENT='One row per accepted transaction';
 
--- OPTIONAL: M:N tagging (only if we model multiple labels)
-CREATE TABLE transaction_tags (
-  tx_id  BIGINT NOT NULL,
-  tag_id INT    NOT NULL,
-  PRIMARY KEY (tx_id, tag_id),
-  FOREIGN KEY (tx_id)  REFERENCES transactions(id),
-  FOREIGN KEY (tag_id) REFERENCES transaction_categories(id)
-);
-
 -- LOGS
 CREATE TABLE system_logs (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -61,5 +52,3 @@ CREATE INDEX idx_tx_time      ON transactions(occurred_at);
 CREATE INDEX idx_tx_cat       ON transactions(category_id);
 CREATE INDEX idx_tx_sender    ON transactions(sender_id);
 CREATE INDEX idx_user_msisdn  ON users(msisdn);
-
-
