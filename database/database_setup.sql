@@ -1,54 +1,73 @@
--- ==== DATABASE: MoMo Analytics (MySQL) ====
+-- -- ==== DATABASE: MoMo Analytics (MySQL) ====
 
--- USERS / CUSTOMERS
-CREATE TABLE users (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  msisdn        VARCHAR(20) NOT NULL UNIQUE COMMENT 'Phone in international format',
-  name          VARCHAR(100) NULL,
-  network       VARCHAR(30)  NULL,
-  created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-) COMMENT='Unique participants found in SMS';
+create table Transaction_Categories
+(
+    category_id   int auto_increment primary key,
+    category_name varchar(100)                       not null,
+    description   text                               null,
+    created_at    datetime default CURRENT_TIMESTAMP null
+);
 
--- CATEGORIES
-CREATE TABLE transaction_categories (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  name        VARCHAR(40) NOT NULL UNIQUE,
-  rule_hint   VARCHAR(200) NULL,
-  created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-) COMMENT='Business-defined transaction types';
+create table Users
+(
+    user_id      int auto_increment
+        primary key,
+    full_name    varchar(150)                                                  not null,
+    phone_number varchar(20)                                                   not null,
+    email        varchar(100)                                                  null,
+    national_id  varchar(30)                                                   not null,
+    user_type    enum ('Customer', 'Agent', 'Admin') default 'Customer'        null,
+    created_at   datetime                            default CURRENT_TIMESTAMP null,
+    updated_at   datetime                            default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP,
+    constraint email
+        unique (email),
+    constraint national_id
+        unique (national_id),
+    constraint phone_number
+        unique (phone_number)
+);
 
--- TRANSACTIONS
-CREATE TABLE transactions (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  occurred_at   DATETIME NOT NULL COMMENT 'Parsed timestamp from SMS',
-  amount        DECIMAL(14,2) NOT NULL CHECK (amount >= 0),
-  currency      CHAR(3) NOT NULL DEFAULT 'RWF',
-  raw_text      TEXT NOT NULL,
-  source_file   VARCHAR(255) NULL,
-  ingested_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+create table System_Logs
+(
+    log_id     int auto_increment
+        primary key,
+    user_id    int                                null,
+    action     varchar(255)                       not null,
+    details    text                               null,
+    ip_address varchar(45)                        null,
+    log_date   datetime default CURRENT_TIMESTAMP null,
+    constraint System_Logs_ibfk_1
+        foreign key (user_id) references Users (user_id)
+            on delete set null
+);
 
-  sender_id     BIGINT NOT NULL,
-  receiver_id   BIGINT NULL,
-  category_id   INT    NULL,
+create index user_id
+    on System_Logs (user_id);
 
-  CONSTRAINT fk_tx_sender   FOREIGN KEY (sender_id)  REFERENCES users(id),
-  CONSTRAINT fk_tx_receiver FOREIGN KEY (receiver_id)REFERENCES users(id),
-  CONSTRAINT fk_tx_cat      FOREIGN KEY (category_id)REFERENCES transaction_categories(id)
-) COMMENT='One row per accepted transaction';
+create table Transactions
+(
+    transaction_id int auto_increment
+        primary key,
+    sender_id      int not null,
+    receiver_id    int not null,
+    category_id    int not null,
+    amount         decimal(12, 2) not null,
+    status         enum ('Pending', 'Completed', 'Failed', 'Reversed') default 'Pending'         null,
+    created_at     datetime                                            default CURRENT_TIMESTAMP null,
+    constraint Transactions_ibfk_1
+        foreign key (sender_id) references Users (user_id),
+    constraint Transactions_ibfk_2
+        foreign key (receiver_id) references Users (user_id),
+    constraint Transactions_ibfk_3
+        foreign key (category_id) references Transaction_Categories (category_id)
+);
 
--- LOGS
-CREATE TABLE system_logs (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  event_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  stage      ENUM('PARSE','CLEAN','CATEGORIZE','LOAD') NOT NULL,
-  status     ENUM('INFO','WARN','ERROR') NOT NULL,
-  detail     TEXT NULL,
-  tx_id      BIGINT NULL,
-  FOREIGN KEY (tx_id) REFERENCES transactions(id)
-) COMMENT='ETL processing audit';
+create index category_id
+    on Transactions (category_id);
 
--- INDEXES (adjust to your queries)
-CREATE INDEX idx_tx_time      ON transactions(occurred_at);
-CREATE INDEX idx_tx_cat       ON transactions(category_id);
-CREATE INDEX idx_tx_sender    ON transactions(sender_id);
-CREATE INDEX idx_user_msisdn  ON users(msisdn);
+create index receiver_id
+    on Transactions (receiver_id);
+
+create index sender_id
+    on Transactions (sender_id);
+
