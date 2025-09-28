@@ -158,3 +158,5 @@ https://lucid.app/lucidchart/790473e5-3b45-4606-b15a-df609d0c7bb8/edit?invitatio
 Our Jira board (To Do, In Progress, Done):
 👉 [https://alustudent-team-gms7kuss.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJpIjoiYjc1ODVlOTMxMzhjNDhiNmFkNDk0N2RhZDU3NmRlZGMiLCJwIjoiaiJ9]
 
+Data Base Documentation Link 
+https://docs.google.com/document/d/1X5v3bmR58HNtFQzrMkiQB8Qfbjcie-D1/edit?usp=sharing&ouid=101338842732883652296&rtpof=true&sd=true
