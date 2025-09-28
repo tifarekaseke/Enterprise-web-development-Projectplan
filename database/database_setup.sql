@@ -63,3 +63,4 @@ CREATE INDEX idx_tx_sender    ON transactions(sender_id);
 CREATE INDEX idx_user_msisdn  ON users(msisdn);
 
 
+

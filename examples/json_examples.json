@@ -1,0 +1,68 @@
+{
+  "user": {
+    "id": 101,
+    "msisdn": "+250781234567",
+    "name": "Alice",
+    "network": "MTN",
+    "created_at": "2025-09-01T12:00:00Z"
+  },
+
+  "category": {
+    "id": 3,
+    "name": "PAY",
+    "created_at": "2025-08-25T09:30:00Z"
+  },
+
+  "transaction_min": {
+    "id": 9001,
+    "occurred_at": "2025-09-01T10:35:00Z",
+    "amount": 2000.00,
+    "currency": "RWF",
+    "raw_text": "You paid merchant RWF 2,000 to 0789000111",
+    "source_file": "momo.xml",
+    "ingested_at": "2025-09-01T10:36:12Z",
+    "sender_id": 101,
+    "receiver_id": 205,
+    "category_id": 3
+  },
+
+  "transaction_full": {
+    "id": 9001,
+    "occurred_at": "2025-09-01T10:35:00Z",
+    "amount": 2000.00,
+    "currency": "RWF",
+    "raw_text": "You paid merchant RWF 2,000 to 0789000111",
+    "source_file": "momo.xml",
+    "ingested_at": "2025-09-01T10:36:12Z",
+    "sender": {
+      "id": 101,
+      "msisdn": "+250781234567",
+      "name": "Alice",
+      "network": "MTN"
+    },
+    "receiver": {
+      "id": 205,
+      "msisdn": "+250789000111",
+      "name": "Bob",
+      "network": "MTN"
+    },
+    "category": {
+      "id": 3,
+      "name": "PAY"
+    },
+    "tags": ["merchant", "pos"], 
+    "analytics": {
+      "day": "2025-09-01",
+      "is_fee": false
+    }
+  },
+
+  "system_log": {
+    "id": 50011,
+    "event_time": "2025-09-01T10:36:12Z",
+    "stage": "LOAD",
+    "status": "INFO",
+    "detail": "Inserted tx id=9001",
+    "tx_id": 9001
+  }
+}
