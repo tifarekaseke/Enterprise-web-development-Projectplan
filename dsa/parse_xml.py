@@ -1,11 +1,11 @@
 # dsa/parse_xml.py
-from xml.etree import ElementTree as ET
+from xml.etree import ElementTree as ET #
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 import json
 import os
 
-def parse_momo_xml(xml_path: str) -> List[Dict[str, Any]]:
+def parse_momo_xml(xml_path: str) -> List[Dict[str, Any]]: # noqa: C901 # complex function, but ok for this simple parser. 
     """
     Parse modified_sms_v2.xml into a list of dicts.
     Expected XML shape (example, adapt tags if needed):
@@ -66,9 +66,10 @@ def parse_momo_xml(xml_path: str) -> List[Dict[str, Any]]:
     return out
 
 if __name__ == "__main__":
-    xml_path = os.environ.get("MOMO_XML", "modified_sms_v2.xml")
+    xml_path = os.environ.get("MOMO_XML", "data/raw/modified_sms_v2.xml")
     data = parse_momo_xml(xml_path)
     os.makedirs("examples", exist_ok=True)
-    with open("examples/sample_transactions.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"Wrote {len(data)} transactions to examples/sample_transactions.json")
+    output_file = "examples/json_schemas.json"
+    with open(output_file, "w", encoding="utf-8") as f: 
+        json.dump(data, f, ensure_ascii=False, indent=2) 
+    print(f"Wrote {len(data)} transactions to examples/json_schemas.json")

@@ -1,7 +1,7 @@
 # api/server.py
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from urllib.parse import urlparse
-import json, base64, os, time
+from http.server import BaseHTTPRequestHandler, HTTPServer # simple http server to help us focus on API logic without external deps (django, flask, fastapi, etc)
+from urllib.parse import urlparse # parse URL paths and query params ( no external deps )
+import json, base64, os, time # stdlib only
 from typing import Dict, Any, List
 from dsa.parse_xml import parse_momo_xml
 
@@ -69,7 +69,7 @@ def read_body_json(handler: BaseHTTPRequestHandler):
     except Exception:
         return None
 
-class App(BaseHTTPRequestHandler):
+class App(BaseHTTPRequestHandler): # our main API handler class (extends BaseHTTPRequestHandler) for CRUD operations
     def _send_json(self, obj, status=200):
         payload = json.dumps(obj, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
