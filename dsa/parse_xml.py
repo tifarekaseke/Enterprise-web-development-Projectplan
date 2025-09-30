@@ -150,7 +150,7 @@ if __name__ == "__main__":
     os.makedirs("examples", exist_ok=True)
     
     # Write to JSON
-    output_file = "examples/sample_transactions.json"
+    output_file = "examples/json_schemas.json"
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     
