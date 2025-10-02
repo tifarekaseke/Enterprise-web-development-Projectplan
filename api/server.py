@@ -3,7 +3,8 @@ from http.server import BaseHTTPRequestHandler, HTTPServer # simple http server 
 from urllib.parse import urlparse # parse URL paths and query params ( no external deps )
 import json, base64, os, time # stdlib only
 from typing import Dict, Any, List
-from dsa.parse_xml import parse_momo_xml
+from dsa.parse_xml import parse_momo_xml 
+import hashlib # for hashing passwords
 
 # ====== Config ======
 HOST = "127.0.0.1"
@@ -12,40 +13,42 @@ XML_PATH = os.environ.get("MOMO_XML", "modified_sms_v2.xml")
 
 # Basic Auth credentials (for demo; DO NOT hardcode in production)
 BASIC_USER = os.environ.get("API_USER", "admin")
-BASIC_PASS = os.environ.get("API_PASS", "admin123")
+BASIC_PASS = os.environ.get("API_PASS", "group8")
 
 # ====== In-memory store ======
 # We keep two structures for DSA comparison and fast lookups:
 #   - transactions_list: list of dicts
 #   - transactions_index: dict[id] = dict
-transactions_list: List[Dict[str, Any]] = []
-transactions_index: Dict[int, Dict[str, Any]] = {}
-next_id = 1
+transactions_list: List[Dict[str, Any]] = []  # list of transactions (for GET /transactions)
+transactions_index: Dict[int, Dict[str, Any]] = {} # id -> transaction mapping for fast lookup for GET/PUT/DELETE by id
+next_id = 1 # intial ID for new transactions (created via POST)
 
 def load_data():
     global transactions_list, transactions_index, next_id
-    if os.path.exists(XML_PATH):
+    if os.environ.exists(XML_PATH):
         transactions_list = parse_momo_xml(XML_PATH)
     else:
-        transactions_list = []
-    transactions_index = {int(t["id"]): t for t in transactions_list}
-    next_id = (max(transactions_index.keys()) + 1) if transactions_index else 1
+        transctions_list = []
 
-def ensure_auth(handler: BaseHTTPRequestHandler) -> bool:
+    transactions_index = {int(t["t"]): t for t in transactions_list } 
+    next_id = (max(transactions_index.keys())+1) if transactions_index else 1
+    
+def ensure_auth(handler: BaseHTTPRequestHandler) -> bool: 
     auth = handler.headers.get("Authorization")
-    if not auth or not auth.startswith("Basic "):
+    if not auth or not auth.startswith("Basic "):  # no auth provided or not basic then return 401
         handler.send_response(401)
-        handler.send_header("WWW-Authenticate", 'Basic realm="momo"')
+        handler.send_header("Content-Type", "application/json") # specify content type for clarity example
+        handler.send_header("WWW-Authenticate", 'Basic realm="momo"') # to help ask for credentials
         handler.end_headers()
         handler.wfile.write(b'{"error":"Unauthorized"}')
         return False
 
     try:
-        b64 = auth.split(" ", 1)[1]
-        decoded = base64.b64decode(b64).decode("utf-8")
-        user, pwd = decoded.split(":", 1)
-    except Exception:
-        handler.send_response(401)
+        b64 = auth.split(" ", 1)[1] # get base64 part after "Basic "
+        decoded = base64.b64decode(b64).decode("utf-8") # decode base64 to "user:pass"
+        user, pwd = decoded.split(":", 1) # split into user and pass
+    except Exception: # any error in decoding or splitting then return 401
+        handler.send_response(401) 
         handler.send_header("WWW-Authenticate", 'Basic realm="momo"')
         handler.end_headers()
         handler.wfile.write(b'{"error":"Unauthorized"}')
@@ -55,18 +58,18 @@ def ensure_auth(handler: BaseHTTPRequestHandler) -> bool:
         return True
     handler.send_response(401)
     handler.send_header("WWW-Authenticate", 'Basic realm="momo"')
-    handler.end_headers()
+    handler.end_headers() 
     handler.wfile.write(b'{"error":"Unauthorized"}')
     return False
 
 def read_body_json(handler: BaseHTTPRequestHandler):
-    length = int(handler.headers.get("Content-Length", "0"))
+    length = int(handler.headers.get("Content-Length", "0")) 
     raw = handler.rfile.read(length) if length > 0 else b""
     if not raw:
         return None
     try:
         return json.loads(raw.decode("utf-8"))
-    except Exception:
+    except Exception: 
         return None
 
 class App(BaseHTTPRequestHandler): # our main API handler class (extends BaseHTTPRequestHandler) for CRUD operations
