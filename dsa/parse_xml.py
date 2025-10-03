@@ -154,7 +154,7 @@ if __name__ == "__main__":
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     
-    print(f"\n✓ Successfully wrote {len(data)} transactions to {output_file}")
+    print(f"\n Successfully wrote {len(data)} transactions to {output_file}")
     
     # Print first transaction as example
     if data:
